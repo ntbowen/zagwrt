@@ -144,11 +144,11 @@ define Device/Default
   IMAGE/combined-efi.vhdx := grub-config efi | combined efi | grub-install efi | qemu-image vhdx -o subformat=dynamic
   ARTIFACT/onie-installer.bin := onie-installer
   ifeq ($(CONFIG_TARGET_IMAGES_GZIP),y)
-    IMAGES-y := rootfs.img.gz
+    IMAGES-y :=
     IMAGES-$$(CONFIG_GRUB_IMAGES) += combined.img.gz
     IMAGES-$$(CONFIG_GRUB_EFI_IMAGES) += combined-efi.img.gz
   else
-    IMAGES-y := rootfs.img
+    IMAGES-y :=
     IMAGES-$$(CONFIG_GRUB_IMAGES) += combined.img
     IMAGES-$$(CONFIG_GRUB_EFI_IMAGES) += combined-efi.img
   endif
