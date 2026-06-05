@@ -323,7 +323,7 @@
 &i2c1 {
 	status = "okay";
 
-	pmic@23 {
+	rk806: pmic@23 {
 		compatible = "rockchip,rk806";
 		reg = <0x23>;
 		gpio-controller;
@@ -866,7 +866,8 @@
 	bus-width = <8>;
 	cap-mmc-highspeed;
 	full-pwr-cycle-in-suspend;
-	max-frequency = <100000000>;
+	post-power-on-delay-ms = <200>;
+	max-frequency = <150000000>;
 	mmc-hs400-1_8v;
 	mmc-hs400-enhanced-strobe;
 	no-sdio;
