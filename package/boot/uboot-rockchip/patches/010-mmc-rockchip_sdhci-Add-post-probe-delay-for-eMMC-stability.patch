@@ -1,0 +1,71 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: ZagWrt <zagwrt@local>
+Date: Thu, 05 Jun 2026 00:00:00 +0800
+Subject: [PATCH] mmc: rockchip_sdhci: Add delays and dynamic tap for RK3576 eMMC stability
+
+Some eMMC devices on RK3576-based boards exhibit intermittent block read
+errors during U-Boot boot stage. The errors manifest as:
+
+  mmc fail to send stop cmd
+  fs_devread read error - block
+
+Three fixes are applied based on analysis of the Rockchip vendor U-Boot
+(radxa/u-boot) which does not exhibit these issues:
+
+1. Add FLAG_TAPVALUE_FROM_SW to rk3576_data so the DLL lock value is
+   used to dynamically compute tap values, providing better timing margin
+   across eMMC device variations. This was already done for RK3528 in
+   patch 009 but was missing for RK3576.
+
+2. Add a 100us delay after each DLL clock configuration. The vendor
+   U-Boot includes this with the comment: "some emmc device need a delay
+   before send command".
+
+3. Read the "post-power-on-delay-ms" DT property after sdhci_probe() to
+   allow eMMC devices to stabilize before any read operations during the
+   SPL stage.
+
+Signed-off-by: ZagWrt <zagwrt@local>
+---
+ drivers/mmc/rockchip_sdhci.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+--- a/drivers/mmc/rockchip_sdhci.c
++++ b/drivers/mmc/rockchip_sdhci.c
+@@ -412,6 +412,9 @@ static int rk3568_sdhci_config_dll(struct sdhci_host *host, u32 clock, bool ena
+ 		sdhci_writel(host, extra, DWCMSHC_EMMC_DLL_STRBIN);
+ 	}
+ 
++	/* Some eMMC devices need a delay before the next command */
++	udelay(100);
++
+ 	return 0;
+ }
+ 
+@@ -640,8 +646,16 @@ static int rockchip_sdhci_probe(struct udevice *dev)
+ 	if (IS_ENABLED(CONFIG_XPL_BUILD) &&
+ 	    dev_read_bool(dev, "u-boot,spl-fifo-mode"))
+ 		host->flags &= ~USE_DMA;
+-
+-	return sdhci_probe(dev);
++
++	ret = sdhci_probe(dev);
++	if (ret)
++		return ret;
++
++	ret = dev_read_u32_default(dev, "post-power-on-delay-ms", 0);
++	if (ret)
++		mdelay(ret);
++
++	return 0;
+ }
+ 
+ static int rockchip_sdhci_of_to_plat(struct udevice *dev)
+@@ -685,6 +699,7 @@ static const struct sdhci_data rk3576_data = {
+ 	.set_ios_post = rk3568_sdhci_set_ios_post,
+ 	.set_clock = rk3568_sdhci_set_clock,
+ 	.config_dll = rk3568_sdhci_config_dll,
++	.flags = FLAG_TAPVALUE_FROM_SW,
+ 	.hs200_txclk_tapnum = DLL_TXCLK_TAPNUM_DEFAULT,
+ 	.hs400_txclk_tapnum = 0x7,
+ 	.hs400_cmdout_tapnum = 0x7,
