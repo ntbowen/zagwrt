@@ -271,7 +271,7 @@
 &gmac0 {
 	clock_in_out = "output";
 	phy-handle = <&rgmii_phy0>;
-	phy-mode = "rgmii-id";
+	phy-mode = "rgmii-rxid";
 	pinctrl-names = "default";
 	pinctrl-0 = <&eth0m1_miim
 		     &eth0m1_tx_bus2
@@ -279,13 +279,16 @@
 		     &eth0m1_rgmii_clk
 		     &eth0m1_rgmii_bus
 		     &ethm1_clk0_25m_out>;
+
+	tx_delay = <0x20>;
+
 	status = "okay";
 };
 
 &gmac1 {
 	clock_in_out = "output";
 	phy-handle = <&rgmii_phy1>;
-	phy-mode = "rgmii-id";
+	phy-mode = "rgmii-rxid";
 	pinctrl-names = "default";
 	pinctrl-0 = <&eth1m0_miim
 		     &eth1m0_tx_bus2
@@ -293,6 +296,9 @@
 		     &eth1m0_rgmii_clk
 		     &eth1m0_rgmii_bus
 		     &ethm0_clk1_25m_out>;
+
+	tx_delay = <0x20>;
+
 	status = "okay";
 };
 
@@ -879,6 +885,10 @@
 
 &saradc {
 	vref-supply = <&vcca_1v8_s0>;
+	status = "okay";
+};
+
+&tsadc {
 	status = "okay";
 };
 

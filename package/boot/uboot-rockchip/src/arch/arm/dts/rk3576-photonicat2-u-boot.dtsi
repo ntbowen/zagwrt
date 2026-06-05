@@ -1,3 +1,19 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rk3576-u-boot.dtsi"
+
+&rk806 {
+	u-boot,dm-pre-reloc;
+};
+
+&vcc5v0_sys_s5 {
+	u-boot,dm-pre-reloc;
+};
+
+&vccio_sd_s0 {
+	u-boot,dm-pre-reloc;
+};
+
+&vdd_logic_s0 {
+	u-boot,dm-pre-reloc;
+};
