@@ -111,7 +111,7 @@ endef
 #'
 
 # 定义构建时间戳（北京时间）
-BUILD_TIMESTAMP=$(shell TZ='Asia/Shanghai' date +%Y%m%d-%H%M)
+BUILD_TIMESTAMP=$(shell TZ='Asia/Shanghai' date +%Y.%m.%d.%H%M)
 
 VERSION_SED_SCRIPT:=$(SED) 's,%U,$(call sed_escape,$(VERSION_REPO)),g' \
 	-e 's,%V,$(call sed_escape,$(VERSION_NUMBER)),g' \
