@@ -77,13 +77,6 @@ define KernelPackage/aic8800-usb
   AUTOLOAD:=$(call AutoProbe,aic_load_fw aic8800DC_fdrv)
 endef
 
-define KernelPackage/aic8800-usb/install
-	$(INSTALL_DIR) $(1)/etc/hotplug.d/ieee80211
-	$(INSTALL_BIN) ./files/etc/hotplug.d/ieee80211/20-aic8800 $(1)/etc/hotplug.d/ieee80211/
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/etc/init.d/aic8800-init $(1)/etc/init.d/
-endef
-
 NOSTDINC_FLAGS:= \
 	$(KERNEL_NOSTDINC_FLAGS) \
 	-I$(PKG_BUILD_DIR) \
