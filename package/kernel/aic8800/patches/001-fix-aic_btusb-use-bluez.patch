@@ -1,0 +1,10 @@
+--- a/src/USB/driver_fw/drivers/aic_btusb/aic_btusb.h
++++ b/src/USB/driver_fw/drivers/aic_btusb/aic_btusb.h
+@@ -37,7 +37,7 @@
+ 
+ #ifdef CONFIG_PLATFORM_UBUNTU
+-#define CONFIG_BLUEDROID 1 /* bleuz 0, bluedroid 1, lbh 2 */
++#define CONFIG_BLUEDROID 0 /* bluez 0, bluedroid 1, lbh 2 */
+ #else
+ #define CONFIG_BLUEDROID 1 /* bluez 0, bluedroid 1, lbh 2 */
+ #endif
