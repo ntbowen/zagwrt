@@ -1,10 +1,26 @@
---- a/src/USB/driver_fw/drivers/aic_btusb/aic_btusb.h
-+++ b/src/USB/driver_fw/drivers/aic_btusb/aic_btusb.h
+From: AIC8800 Bluetooth Fix <fix@aic8800.local>
+Date: Thu, 19 Jun 2026 00:00:00 +0800
+Subject: [PATCH] 修复 AIC8800 蓝牙驱动以使用 BlueZ 协议栈
+
+此补丁将 CONFIG_BLUEDROID 从 1 修改为 0，使 AIC8800 蓝牙驱动
+使用标准的 BlueZ 协议栈而不是 Android 的 Bluedroid。
+
+这样可以让蓝牙设备在 OpenWrt 系统中被正确识别和管理，
+支持标准的 BlueZ 工具（bluetoothctl, hciconfig 等）。
+
+Signed-off-by: AIC8800 Bluetooth Fix <fix@aic8800.local>
+---
+ src/USB/driver_fw/drivers/aic_btusb/aic_btusb.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/src/USB/driver_fw/drivers/aic_btusb/aic_btusb.h	2026-06-18 19:50:40.418493500 +0800
++++ b/src/USB/driver_fw/drivers/aic_btusb/aic_btusb.h	2026-06-18 19:50:40.611952264 +0800
 @@ -37,7 +37,7 @@
  
+ 
  #ifdef CONFIG_PLATFORM_UBUNTU
--#define CONFIG_BLUEDROID 1 /* bleuz 0, bluedroid 1, lbh 2 */
-+#define CONFIG_BLUEDROID 0 /* bluez 0, bluedroid 1, lbh 2 */
+-#define CONFIG_BLUEDROID        1 /* bleuz 0, bluedroid 1, lbh 2 */
++#define CONFIG_BLUEDROID        0 /* bleuz 0, bluedroid 1, lbh 2 */
  #else
- #define CONFIG_BLUEDROID 1 /* bluez 0, bluedroid 1, lbh 2 */
+ #define CONFIG_BLUEDROID        0 /* bleuz 0, bluedroid 1, lbh 2 */
  #endif
