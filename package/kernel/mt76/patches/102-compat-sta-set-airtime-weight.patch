@@ -1,0 +1,24 @@
+--- a/mt7996/main.c	2026-07-01 00:41:37.631950611 +0800
++++ b/mt7996/main.c	2026-07-01 00:41:37.632231541 +0800
+@@ -2584,7 +2584,9 @@
+ 	.sta_statistics = mt7996_sta_statistics,
+ 	.sta_set_4addr = mt7996_sta_set_4addr,
+ 	.sta_set_decap_offload = mt7996_sta_set_decap_offload,
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 14, 0)
+ 	.sta_set_airtime_weight = mt7996_sta_set_airtime_weight,
++#endif
+ 	.add_twt_setup = mt7996_mac_add_twt_setup,
+ 	.twt_teardown_request = mt7996_twt_teardown_request,
+ #ifdef CONFIG_MAC80211_DEBUGFS
+--- a/mt7915/main.c	2026-07-01 00:41:37.653784360 +0800
++++ b/mt7915/main.c	2026-07-01 00:41:37.653990048 +0800
+@@ -1884,7 +1884,9 @@
+ 	.sta_set_txpwr = mt7915_sta_set_txpwr,
+ 	.sta_set_4addr = mt7915_sta_set_4addr,
+ 	.sta_set_decap_offload = mt7915_sta_set_decap_offload,
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 14, 0)
+ 	.sta_set_airtime_weight = mt7915_sta_set_airtime_weight,
++#endif
+ 	.add_twt_setup = mt7915_mac_add_twt_setup,
+ 	.twt_teardown_request = mt7915_twt_teardown_request,
+ 	.set_frag_threshold = mt7915_set_frag_threshold,
