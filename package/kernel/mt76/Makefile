@@ -1,16 +1,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mt76
-PKG_RELEASE=2
+PKG_RELEASE=1
 
 PKG_LICENSE:=BSD-3-Clause-Clear
 PKG_LICENSE_FILES:=
 
 PKG_SOURCE_URL:=https://github.com/openwrt/mt76
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2026-03-19
-PKG_SOURCE_VERSION:=39c960c3ada558b4c2e7915772483d3731573d09
-PKG_MIRROR_HASH:=7a9f8ea21eee5324e6638ace627dd305b3650ae6ca86109317d9ee83702140eb
+PKG_SOURCE_DATE:=2026-06-30
+PKG_SOURCE_VERSION:=f6cf5faff4b61065edab5f8efdaed8305e60039f
+PKG_MIRROR_HASH:=19e5eefdb472bac8a857b97be4952fccd9c55252e2a3ae16df25a06705754fbd
 
 PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
 PKG_USE_NINJA:=0
@@ -187,7 +187,7 @@ endef
 define KernelPackage/mt7622-firmware
   $(KernelPackage/mt76-default)
   TITLE:=MediaTek MT7622 firmware
-  DEPENDS+=+kmod-mt7615e
+  DEPENDS+=@TARGET_mediatek_mt7622 +kmod-mt7615e
 endef
 
 define KernelPackage/mt7663-firmware-ap
