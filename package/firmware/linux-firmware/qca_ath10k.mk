@@ -44,8 +44,8 @@ Package/ath10k-firmware-qca9377-sdio = $(call Package/firmware-default,ath10k qc
 define Package/ath10k-firmware-qca9377-sdio/install
 	$(INSTALL_DIR) $(1)/lib/firmware/ath10k/QCA9377/hw1.0
 	$(INSTALL_DATA) \
-		$(PKG_BUILD_DIR)/ath10k/QCA9377/hw1.0/firmware-sdio-6.bin \
-		$(1)/lib/firmware/ath10k/QCA9377/hw1.0/firmware-sdio-6.bin
+		$(PKG_BUILD_DIR)/ath10k/QCA9377/hw1.0/firmware-sdio-5.bin \
+		$(1)/lib/firmware/ath10k/QCA9377/hw1.0/firmware-sdio-5.bin
 endef
 $(eval $(call BuildPackage,ath10k-firmware-qca9377-sdio))
 
