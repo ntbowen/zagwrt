@@ -66,15 +66,27 @@ define Device/hasivo_s1100wp-8gt-se
   SOC := rtl9303
   DEVICE_VENDOR := Hasivo
   DEVICE_MODEL := S1100WP-8GT-SE
+  DEVICE_PACKAGES := kmod-pse-hasivo-hs104 kmod-mfd-hasivo-stc8
   IMAGE_SIZE := 12288k
   $(Device/kernel-lzma)
 endef
 TARGET_DEVICES += hasivo_s1100wp-8gt-se
 
+define Device/hasivo_s1100wp-8xgt-se
+  SOC := rtl9303
+  DEVICE_VENDOR := Hasivo
+  DEVICE_MODEL := S1100WP-8XGT-SE
+  IMAGE_SIZE := 12288k
+  DEVICE_PACKAGES := rtl826x-firmware kmod-pse-hasivo-hs104 kmod-mfd-hasivo-stc8
+  $(Device/kernel-lzma)
+endef
+TARGET_DEVICES += hasivo_s1100wp-8xgt-se
+
 define Device/hasivo_s600wp-5gt-2sx-se
   SOC := rtl9303
   DEVICE_VENDOR := Hasivo
   DEVICE_MODEL := S600WP-5GT-2SX-SE
+  DEVICE_PACKAGES := kmod-pse-hasivo-hs104 kmod-mfd-hasivo-stc8
   IMAGE_SIZE := 12288k
   $(Device/kernel-lzma)
 endef
@@ -336,11 +348,11 @@ TARGET_DEVICES += zyxel_xgs1250-12-b1
 define Device/zyxel_xgs1930-28hp
   SOC := rtl9301
   DEVICE_MODEL := XGS1930-28HP
-  DEVICE_PACKAGES := kmod-hwmon-gpiofan
   FLASH_ADDR := 0xb4260000
   IMAGE_SIZE := 30336k
   ZYNFW_ALIGN := 0x10000
   $(Device/zyxel_zynos)
+  DEVICE_PACKAGES += kmod-hwmon-gpiofan kmod-pse-realtek-mcu-i2c
 endef
 TARGET_DEVICES += zyxel_xgs1930-28hp
 

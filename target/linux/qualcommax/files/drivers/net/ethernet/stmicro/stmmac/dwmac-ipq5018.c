@@ -12,6 +12,7 @@
 #include <linux/platform_device.h>
 #include <linux/reset.h>
 #include <linux/stmmac.h>
+#include <linux/version.h>
 
 #include "stmmac_platform.h"
 
@@ -35,7 +36,11 @@ struct ipq5018_gmac {
 	struct clk *tx_clk;
 };
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 18, 0)
+static void ipq5018_gmac_fix_speed(void *priv, int speed, unsigned int mode)
+#else
 static void ipq5018_gmac_fix_speed(void *priv, unsigned int speed, unsigned int mode)
+#endif
 {
 	struct ipq5018_gmac *gmac = priv;
 	unsigned long rate;
@@ -113,7 +118,7 @@ static void ipq5018_gmac_get_interfaces(struct stmmac_priv *priv, void *bsp_priv
 	if (priv->hw->phylink_pcs) {
 		__set_bit(PHY_INTERFACE_MODE_2500BASEX, interfaces);
 
-		/* 
+		/*
 		 * Synopsys DWMAC IP version 3.7 is limited to 1 Gpbs.
 		 * This vendor specific implementation supports 2.5 Gbps, so override
 	 	 * the default mac link capabilities.
@@ -156,7 +161,7 @@ static int ipq5018_gmac_probe(struct platform_device *pdev)
 	if (IS_ERR(gmac->tx_clk))
 		return dev_err_probe(dev, PTR_ERR(gmac->tx_clk),
 				     "failed to get TX clock\n");
-	
+
 	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(ipq5018_gmac_clks),
 				ipq5018_gmac_clks);
 	if (ret)
