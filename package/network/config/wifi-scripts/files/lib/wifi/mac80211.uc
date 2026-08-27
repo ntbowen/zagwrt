@@ -2,7 +2,7 @@
 import { readfile } from "fs";
 import * as uci from 'uci';
 
-const bands_order = [ "5G", "2G", "6G" ];
+const bands_order = [ "60G", "5G", "2G", "6G" ];
 const htmode_order = [ "EHT", "HE", "VHT", "HT" ];
 
 let board = json(readfile("/etc/board.json"));
