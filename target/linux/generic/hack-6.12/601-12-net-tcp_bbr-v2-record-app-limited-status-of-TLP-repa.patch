@@ -22,16 +22,15 @@ Change-Id: Ic8ae567caa4e4bfd5fd82c3d4be12a5d9171655e
 
 --- a/include/linux/tcp.h
 +++ b/include/linux/tcp.h
-@@ -302,7 +302,8 @@ struct tcp_sock {
+@@ -284,6 +284,7 @@ struct tcp_sock {
+  *	0x5?10 << 16 + snd_wnd in net byte order
   */
- 	struct tcp_options_received rx_opt;
  	u8	nonagle     : 4,/* Disable Nagle algorithm?             */
 -		rate_app_limited:1;  /* rate_{delivered,interval_us} limited? */
 +		rate_app_limited:1,  /* rate_{delivered,interval_us} limited? */
 +		tlp_orig_data_app_limited:1; /* app-limited before TLP rtx? */
- 	__cacheline_group_end(tcp_sock_write_txrx);
- 
- 	/* RX read-write hotpath cache lines */
+ 	__be32	pred_flags;
+ 	u64	tcp_clock_cache; /* cache last tcp_clock_ns() (see tcp_mstamp_refresh()) */
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
 @@ -3019,6 +3019,7 @@ void tcp_send_loss_probe(struct sock *sk
